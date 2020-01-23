@@ -2,6 +2,8 @@
 
 const ffmpeg = require('fluent-ffmpeg');
 
+const progressBar = require('./progress-bar.js');
+
 ffmpeg.setFfmpegPath('./ffmpeg/bin/ffmpeg.exe');
 ffmpeg.setFfprobePath('./ffmpeg/bin/ffprobe.exe');
 
@@ -54,13 +56,15 @@ ffmpeg(input).format('mp3').audioBitrate('320k').noVideo().output(output)
 		console.log('An error occurred: ' + err.message);
 	})
 	.on('start', function() {
-    console.log('Processing started!');
+		console.log('Processing started!');
 	})
 	.on('progress', function(progress) {
-    if (Math.round(progress.percent)%5 == 0)
-		console.log('Processing: ' + Math.round(progress.percent) + '% done');
+		progressBar.draw(progress.percent);
 	})
 	.on('end', function() {
-		console.log('Processing finished!');
+		console.log('\nProcessing finished!');
+		process.exit(0);
 	})
 	.run();
+	
+return;
