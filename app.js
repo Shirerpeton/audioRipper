@@ -39,17 +39,19 @@ for (let i=0; i < args.length; i++) {
 	}
 }
 
-console.log('input: ' + input);
-console.log('output: ' + output);
+console.log(input);
+console.log(output);
 
 if (!input) {
 	console.log('You must specify input file!');
-	return;
+} else {
+	if (!output) {
+		output = input.split('.').slice(0, -1).join() + '.mp3';
+	}
 }
-if (!output) {
-	console.log('You must specify output file!');
-	return;
-}
+
+console.log('input: ' + input);
+console.log('output: ' + output);
 
 ffmpeg(input).format('mp3').audioBitrate('320k').noVideo().output(output)
 	.on('error', function(err) {
