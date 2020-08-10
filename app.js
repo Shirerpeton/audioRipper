@@ -97,7 +97,7 @@ function ffprobePromise(file) {
 				query = query.output('./output/' + output + '.mp3');
 			else
 				for (let i = 0; i < audioStreams.length; i++) {
-					query = query.output('./output/' + output + '-track:' + i + '.mp3').outputOptions('-map 0:a:' + i);
+					query = query.output('./output/' + output + '[track-' + i + '].mp3').outputOptions('-map 0:a:' + i);
 				}
 			query = query
 				.on('error', function (err) {
